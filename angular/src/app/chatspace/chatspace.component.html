@@ -1,0 +1,13 @@
+<div class="chatspace">
+    <div class="chat-history" #chatHistoryEl>
+        <div #messageEls>
+            <app-chat-message *ngFor="let m of chatMessages" [data]="m"></app-chat-message>
+        </div>
+    </div>
+    <div class="chat-suggestions">
+        <app-chat-suggestion *ngFor="let s of chatSuggestions" [data]="s"></app-chat-suggestion>
+    </div>
+    <div class="chat-input">
+        <textarea placeholder="Ask ChatGPT..." (keydown)="onTextareaKeyDown($event)"></textarea>
+    </div>
+</div>

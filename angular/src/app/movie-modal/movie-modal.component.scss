@@ -1,0 +1,26 @@
+@use "../../styles";
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    background-color: styles.$backgroundColor;
+    border-radius: styles.$unitBorderRadius;
+    position: relative;
+    display: grid;
+
+    // height: 80%; // TODO: remove
+    // top: 10%; // TODO: remove
+    .close-button {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      cursor: pointer;
+      z-index: 999;
+    }
+  }
+}

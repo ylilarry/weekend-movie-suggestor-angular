@@ -1,0 +1,8 @@
+<div class="backdrop" #backdropEl [style]="backdropStyle" (click)="onClose?.()">
+    <div class="content" #contentEl (click)="$event.stopPropagation()">
+        <button class="close-button" mat-icon-button (click)="onClose?.()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <ng-content></ng-content>
+    </div>
+</div>

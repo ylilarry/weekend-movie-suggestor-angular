@@ -1,0 +1,29 @@
+.chat-message {
+  display: flex;
+  .avatar {
+    flex-grow: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    margin: 0 1em 1em 1em;
+    .default-avatar {
+      height: 100%;
+      width: 100%;
+      font-size: 2em;
+    }
+  }
+  .title-line {
+    display: flex;
+    .user {
+      font-weight: bold;
+    }
+    .timestamp {
+      margin-left: 1em;
+      font-size: 0.8em;
+      color: #888;
+    }
+  }
+}

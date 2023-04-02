@@ -1,0 +1,13 @@
+<app-site-layout>
+    <div class="carousel">
+        <h1>Not sure what to watch this weekend?</h1>
+        <app-carousel [config]="carouselConfig" [movies]="movies"></app-carousel>
+    </div>
+    <div class="chatspace">
+        <h2>Ask for suggestions</h2>
+        <app-chatspace></app-chatspace>
+    </div>
+    <app-movie-modal [anchorEl]="movieModalAnchorEl" [onClose]="movieModalOnClose" [show]="movieModalShow">
+        <app-movie-detail [movie]="movieModalMovie"></app-movie-detail>
+    </app-movie-modal>
+</app-site-layout>

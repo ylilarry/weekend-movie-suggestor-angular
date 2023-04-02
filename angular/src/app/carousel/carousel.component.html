@@ -1,0 +1,6 @@
+<div class="carousel">
+    <div class="item" *ngFor="let item of movies" (click)="config.onClick($event, item)">
+        <div class="img" matRipple [style.background-image]="item.imgUrlStyle"></div>
+        <caption>{{item.title}}</caption>
+    </div>
+</div>

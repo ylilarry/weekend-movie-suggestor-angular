@@ -1,0 +1,52 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-bottom: 1em;
+  background-color: #191528;
+  .chatspace {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-height: inherit;
+    .chat-history {
+      padding: 1em 0;
+      flex-grow: 1;
+      app-chat-message {
+        display: block;
+        margin: 1em 0;
+      }
+      overflow-y: scroll;
+      max-height: calc(
+        100vh - var(--carousel-height) - var(--chat-input-height) - 18em
+      );
+    }
+    .chat-suggestions {
+      display: flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 3.5em;
+      margin: 0 1em;
+      gap: 0.5em;
+    }
+    .chat-input {
+      display: flex;
+      flex-direction: column;
+      textarea {
+        padding: 1em;
+        flex-grow: 1;
+        height: 100px;
+        border: none;
+        border-radius: 1em;
+        margin: 1em;
+        background-color: #110e1b;
+        color: white;
+        font-size: 1.2em;
+        resize: none;
+        height: var(--chat-input-height);
+      }
+    }
+  }
+}

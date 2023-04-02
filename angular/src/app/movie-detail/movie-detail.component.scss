@@ -1,0 +1,62 @@
+@use "../../styles";
+
+:host {
+  display: grid;
+  .movie-detail {
+    height: 100%;
+    border-radius: styles.$unitBorderRadius;
+    overflow: hidden;
+    .poster-tile {
+      height: 100%;
+      background-size: contain;
+    }
+    .detail-tile {
+      align-self: flex-start;
+      height: 100%;
+      width: 100%;
+      padding: 5em;
+      background-color: styles.$backgroundColor;
+      color: white;
+      display: block;
+      .subtitle-line {
+        display: flex;
+        gap: 0.75em;
+        align-items: center;
+      }
+      .description {
+        margin-top: 1em;
+        margin-bottom: 1em;
+        font-size: 1.1em;
+        line-height: 150%;
+      }
+
+      .label {
+        margin-right: 1em;
+      }
+
+      a {
+        color: lightskyblue;
+      }
+
+      p {
+        margin: 1em 0;
+      }
+
+      .stars,
+      .director {
+        display: flex;
+        align-items: center;
+        .stars-list,
+        .directors-list {
+          display: flex;
+          align-items: center;
+          .dot {
+            margin-left: 0.75em;
+            margin-right: 0.75em;
+            margin-top: 2px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@use "../../styles";
+
+.carousel {
+  display: flex;
+  flex-direction: row;
+  .item {
+    margin: 1em;
+    position: relative;
+    border-radius: styles.$unitBorderRadius;
+    .img {
+      border-radius: styles.$unitBorderRadius;
+      width: calc((var(--carousel-height) - 10em) / 3 * 2);
+      height: calc(
+        var(--carousel-height) - 10em
+      ); // standard movie poster is 2x3
+      background-size: contain;
+      cursor: pointer;
+    }
+    caption {
+      padding: 1em;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+// @use "@angular/material" as mat;
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "~material-icons/iconfont/material-icons.css";
+
+// $app-theme: mat.define-dark-theme(());
+// @include mat.button-theme($app-theme);
+
+html,
+body {
+  // height: 100%;
+  background-color: #110e1b;
+  color: white;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+$unitBorderRadius: 1em;
+$backgroundColor: #110e1b;
+
+:root {
+  --carousel-height: 30em;
+  --chat-input-height: 7em;
+}
+
+@media (max-height: 900px) {
+  :root {
+    --carousel-height: 25em;
+    --chat-input-height: 3em;
+  }
+}
