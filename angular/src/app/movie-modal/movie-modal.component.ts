@@ -76,7 +76,11 @@ export class MovieModalComponent {
         this.contentEl.nativeElement,
         this.backdropEl.nativeElement
       );
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
     } else if (!this.show && this.anchorEl && this._open) {
+      document.body.style.overflow = "auto";
+      document.body.style.height = "auto";
       this._open = false;
       this.playCloseAnimation(
         this.animationBuilder,
