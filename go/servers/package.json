@@ -8,7 +8,8 @@
     "start": "(npm run build) && (sam local start-api --warm-containers lazy)",
     "typecheck-chat": "(cd chat && go build && rm chat-server)",
     "typecheck": "(npm run typecheck-chat)",
-    "watch": "nodemon -e json,go,yaml --signal SIGINT --exec \"(npm run typecheck) && (npm run start)\""
+    "watch": "nodemon -e json,go,yaml --signal SIGINT --exec \"(npm run typecheck) && (npm run start)\"",
+    "deploy": "(npm run build) && (sam deploy)"
   },
   "author": "",
   "license": "ISC"

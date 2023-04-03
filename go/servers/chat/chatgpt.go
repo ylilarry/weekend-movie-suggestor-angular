@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	color "github.com/TwiN/go-color"
 	"github.com/chatgp/gpt3"
 )
 
@@ -17,8 +18,8 @@ func ChatGPTClient() (*gpt3.Client, error) {
 	// new gpt-3 client
 	client, err := gpt3.NewClient(&gpt3.Options{
 		ApiKey:  apiKey,
-		Timeout: 30 * time.Second,
-		Debug:   true,
+		Timeout: 60 * time.Second,
+		Debug:   false,
 	})
 
 	if err != nil {
@@ -47,12 +48,17 @@ func chat(client *gpt3.Client, message []ChatGPTMessage) (*ChatGPTMessage, error
 		"messages": messages,
 	}
 
+	fmt.Println(color.Blue, "Outgoing message:", color.Reset)
+	for i, m := range messages {
+		fmt.Println(color.Blue, i, m, color.Reset)
+	}
+
 	resp, err := client.Post(uri, params)
 	if err != nil {
 		return nil, err
 	}
 
-	fmt.Println(resp)
+	fmt.Println(color.Green, "ChatGPT incoming:", resp, color.Reset)
 
 	respStr := resp.Get("choices.0.message").String()
 	respMsg := ChatGPTMessage{}

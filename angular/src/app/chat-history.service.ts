@@ -96,11 +96,11 @@ export class ChatHistoryService {
     return this.chatBotIsTyping;
   }
 
-  private prepareRequestBody(): ChatServerRequestBody {
+  private prepareRequestBody(start: number = 0): ChatServerRequestBody {
     const body: ChatServerRequestBody = {
       messages: [],
     };
-    for (const message of this.chatHistory) {
+    for (const message of this.chatHistory.slice(start)) {
       body.messages.push({
         role: { You: "user", ChatGPT: "assistant", System: "system" }[
           message.user
@@ -112,11 +112,11 @@ export class ChatHistoryService {
   }
 
   async askForJsonResponse(): Promise<string[]> {
-    const body = this.prepareRequestBody();
+    const body = this.prepareRequestBody(-1);
     body.messages.push({
       role: "user",
       content:
-        'Give a json array containing the movie names. Wrap the array between $$$, like this: $$$["Movie A", "Movie B"]$$$.',
+        'Give a json array containing the movie names you just mentioned. Wrap the array between $$$, like this: $$$["Movie A", "Movie B"]$$$.',
     });
     for (let tries = 0; tries < 3; tries++) {
       try {

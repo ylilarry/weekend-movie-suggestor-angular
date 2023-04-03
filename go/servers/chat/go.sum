@@ -1,3 +1,5 @@
+github.com/TwiN/go-color v1.4.0 h1:fNbOwOrvup5oj934UragnW0B1WKaAkkB85q19Y7h4ng=
+github.com/TwiN/go-color v1.4.0/go.mod h1:0QTVEPlu+AoCyTrho7bXbVkrCkVpdQr7YF7PYWEtSxM=
 github.com/aws/aws-lambda-go v1.36.1 h1:CJxGkL9uKszIASRDxzcOcLX6juzTLoTKtCIgUGcTjTU=
 github.com/aws/aws-lambda-go v1.36.1/go.mod h1:jwFe2KmMsHmffA1X2R09hH6lFzJQxzI8qK17ewzbQMM=
 github.com/aws/aws-sdk-go-v2 v1.17.7 h1:CLSjnhJSTSogvqUGhIC6LqFKATMRexcxLZ0i/Nzk9Eg=
