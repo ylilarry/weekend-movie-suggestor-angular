@@ -20,7 +20,7 @@
       max-height: calc(
         max(
           100vh - var(--carousel-height) - var(--chat-input-height) - 18em,
-          10em
+          15em
         )
       );
     }
@@ -28,11 +28,16 @@
       display: flex;
       flex-wrap: nowrap;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      height: 3.5em;
-      margin: 0 1em;
+      overflow-x: auto;
+      overflow-y: hidden;
+      margin: 1em 0;
+      padding-left: 1em;
       gap: 0.5em;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
     .chat-input {
       display: flex;
@@ -43,7 +48,7 @@
         height: 100px;
         border: none;
         border-radius: 1em;
-        margin: 1em;
+        margin: 0 1em 1em 1em;
         background-color: #110e1b;
         color: white;
         font-size: 1.2em;

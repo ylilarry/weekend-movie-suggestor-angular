@@ -18,11 +18,12 @@ h2 {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  // bottom: 0;
   display: flex;
   flex-direction: column;
   // height: calc(100dvh - var(--carousel-height));
-  // height: calc(100dvh - var(--carousel-height));
-  max-height: calc(100vh - var(--carousel-height));
-  max-height: calc(100vh - var(--carousel-height));
+  height: calc(100lvh - var(--carousel-height));
+  height: calc(100vh - var(--carousel-height));
+  // max-height: calc(100dvh - var(--carousel-height));
+  // max-height: calc(100vh - var(--carousel-height));
 }
