@@ -1,18 +1,5 @@
 import { Component, Input } from "@angular/core";
-
-export type CarouselMovie = {
-  imgUrl: string;
-  imgUrlStyle: string;
-  title: string;
-  score: number;
-  genres: string[];
-  year: number;
-  rating: string;
-  length: string;
-  description: string;
-  directors: string[];
-  stars: string[];
-};
+import { CarouselMovie } from "src/app/movie-carousel.service";
 
 export type CarouselConfig = {
   imageSize: { height: number; width: number };

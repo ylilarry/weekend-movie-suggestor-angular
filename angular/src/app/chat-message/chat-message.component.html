@@ -5,8 +5,11 @@
     <div>
         <p class="title-line">
             <span class="user">{{data.user}}</span>
-            <span class="timestamp">{{data.timestamp}}</span>
+            <span class="timestamp">{{chatTime(data.timestamp)}}</span>
         </p>
         <p class="message">{{data.message}}</p>
+        <p *ngIf="isTyping" class="message is-typing">
+            {{isTypingText}}
+        </p>
     </div>
 </div>

@@ -11,6 +11,7 @@
       background-size: contain;
     }
     .detail-tile {
+      box-sizing: border-box;
       align-self: flex-start;
       height: 100%;
       width: 100%;

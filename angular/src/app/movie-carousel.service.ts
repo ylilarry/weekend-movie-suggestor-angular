@@ -1,51 +1,59 @@
-import { Injectable, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable, of, BehaviorSubject, timeInterval } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Observable, BehaviorSubject } from "rxjs";
+import { movieSearchUrl } from "src/app/config";
 
 export type CarouselMovie = {
-  imgUrl: string;
-  imgUrlStyle: string;
   title: string;
+  year: string;
+  poster: string;
   score: number;
-  genres: string[];
-  year: number;
-  rating: string;
-  length: string;
+  lengthMinutes: number;
   description: string;
   directors: string[];
-  stars: string[];
+  actors: string[];
+  genres: string[];
 };
-
-const movies: CarouselMovie[] = Array(1).fill({
-  imgUrl: "./assets/posters/1.jpg",
-  imgUrlStyle: `url("./assets/posters/1.jpg")`,
-  title: "Movie 1",
-  rating: "R",
-  genres: ["Action", "Adventure", "Fantasy"],
-  year: 2019,
-  score: 8.5,
-  length: "2h 10m",
-  description:
-    "A twisted tale of two estranged sisters whose reunion is cut short by the rise of flesh-possessing demons, thrusting them into a primal battle for survival as they face the most nightmarish version of family imaginable.",
-  directors: ["James Wan"],
-  stars: ["Lili Reinhart", "Madison Iseman", "Camila Mendes"],
-});
 
 @Injectable({
   providedIn: "root",
 })
 export class MovieCarouselService {
-  constructor(private http: HttpClient) {}
-  movies = new BehaviorSubject<CarouselMovie[]>([]);
+  constructor() {}
+  moviesSubject = new BehaviorSubject<CarouselMovie[]>([]);
 
-  async load(): Promise<void> {
-    for (let i = 0; i < 5; i++) {
-      this.movies.next(movies);
-      await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+  async load(query?: string[]): Promise<void> {
+    if (!query) {
+      query = [
+        "That Time I Got Reincarnated as a Slime the Movie: Scarlet Bond",
+        "adventure",
+        "animation",
+      ];
     }
+    let movies: CarouselMovie[] = [];
+    movies = await this.searchMovies(query);
+    console.log(movies);
+    this.moviesSubject.next(movies);
   }
 
   getMovies(): Observable<CarouselMovie[]> {
-    return this.movies;
+    return this.moviesSubject;
+  }
+
+  private async searchMovies(query: string[]): Promise<CarouselMovie[]> {
+    for (let retires = 0; retires < 3; retires++) {
+      try {
+        let resp = await fetch(movieSearchUrl, {
+          method: "POST",
+          body: JSON.stringify({
+            query,
+          }),
+        });
+        return await resp.json();
+      } catch (e) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        continue;
+      }
+    }
+    return [];
   }
 }

@@ -4,3 +4,4 @@
 .nodevenv
 node_modules
 dist
+**/.aws-sam

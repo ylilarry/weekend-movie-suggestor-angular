@@ -1,6 +1,6 @@
 <mat-grid-list class="movie-detail" cols="2" rowHeight="100%">
-    <mat-grid-tile class="poster-tile" [style.background-image]="movie?.imgUrlStyle"></mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile class="poster-tile" [style.background-image]="'url('+movie?.poster+')'"></mat-grid-tile>
+    <mat-grid-tile class="">
         <div class="detail-tile">
             <div class="title-line">
                 <h1>{{movie?.title}}</h1>
@@ -16,17 +16,17 @@
             </h3>
             <div class="subtitle-line">
                 <span class="year">{{movie?.year}}</span>
-                <span class="year">{{movie?.rating}}</span>
-                <span class="year">{{movie?.length}}</span>
+                <span class="year">{{movie?.score}}</span>
+                <span class="year">{{movie?.lengthMinutes}}m</span>
                 <mat-chip-set class="genres">
-                    <mat-chip *ngFor="let g of movie?.genres">{{g}}</mat-chip>
+                    <mat-chip *ngFor="let g of movie?.genres?.slice(0,3)">{{g}}</mat-chip>
                 </mat-chip-set>
             </div>
             <p class="description">{{movie?.description}}</p>
             <mat-divider />
             <p class="director">
                 <b class="label">Director</b>
-                <span *ngFor="let s of movie?.directors; index as i" class="directors-list">
+                <span *ngFor="let s of movie?.directors?.slice(0,2); index as i" class="directors-list">
                     <span class="dot" *ngIf="i > 0">&#x2022;</span>
                     <a target="_blank" [href]="'https://google.com/search?q=' + s">{{s}}</a>
                 </span>
@@ -34,7 +34,7 @@
             <mat-divider />
             <p class="stars">
                 <b class="label">Stars</b>
-                <span *ngFor="let s of movie?.stars; index as i" class="stars-list">
+                <span *ngFor="let s of movie?.actors?.slice(0,3); index as i" class="stars-list">
                     <span class="dot" *ngIf="i > 0">&#x2022;</span>
                     <a target="_blank" [href]="'https://google.com/search?q=' + s">{{s}}</a>
                 </span>

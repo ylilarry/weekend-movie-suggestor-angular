@@ -2,6 +2,8 @@
     <div class="chat-history" #chatHistoryEl>
         <div #messageEls>
             <app-chat-message *ngFor="let m of chatMessages" [data]="m"></app-chat-message>
+            <app-chat-message *ngIf="chatbotIsTyping" [isTyping]="chatbotIsTyping"
+                [data]="chatbotIsTypingMessage"></app-chat-message>
         </div>
     </div>
     <div class="chat-suggestions">

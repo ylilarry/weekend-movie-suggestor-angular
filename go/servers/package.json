@@ -1,0 +1,15 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "description": "This is a sample template for weekend-movie-suggestor - Below is a brief explanation of what we have generated for you:",
+  "main": "index.js",
+  "scripts": {
+    "build": "sam build",
+    "start": "(npm run build) && (sam local start-api --warm-containers lazy)",
+    "typecheck-chat": "(cd chat && go build && rm chat-server)",
+    "typecheck": "(npm run typecheck-chat)",
+    "watch": "nodemon -e json,go,yaml --signal SIGINT --exec \"(npm run typecheck) && (npm run start)\""
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,15 +1,14 @@
 import { Component, OnInit } from "@angular/core";
+import { type CarouselConfig } from "src/app/carousel/carousel.component";
 import {
-  type CarouselConfig,
-  type CarouselMovie,
-} from "src/app/carousel/carousel.component";
-import { MovieCarouselService } from "src/app/movie-carousel.service";
+  CarouselMovie,
+  MovieCarouselService,
+} from "src/app/movie-carousel.service";
 
 @Component({
   selector: "app-homepage",
   templateUrl: "./homepage.component.html",
   styleUrls: ["./homepage.component.scss"],
-  providers: [MovieCarouselService],
 })
 export class HomepageComponent implements OnInit {
   constructor(private movieCarouselService: MovieCarouselService) {}
@@ -33,7 +32,7 @@ export class HomepageComponent implements OnInit {
   ngOnInit() {
     this.movieCarouselService.load();
     this.movieCarouselService.getMovies().subscribe((movies) => {
-      this.movies.push(...movies);
+      this.movies = movies;
     });
   }
 }

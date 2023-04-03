@@ -1,50 +1,146 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, map, retry } from "rxjs";
+import { chatServerUrl } from "src/app/config";
+import { MovieCarouselService } from "src/app/movie-carousel.service";
 
 export type ChatMessage = {
-  user: string;
-  timestamp: string;
-  avatar: string;
+  user: "You" | "ChatGPT" | "System";
+  timestamp: number;
+  avatar?: string;
   message: string;
+};
+
+type ChatServerMessage = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
+type ChatServerRequestBody = {
+  messages: ChatServerMessage[];
+};
+type ChatServerResponseBody = {
+  message: ChatServerMessage;
 };
 
 @Injectable({
   providedIn: "root",
 })
 export class ChatHistoryService {
-  history = new BehaviorSubject<ChatMessage[]>([]);
+  constructor(
+    private http: HttpClient,
+    private movieCarouselService: MovieCarouselService
+  ) {}
+  historySubject = new BehaviorSubject<ChatMessage[]>([]);
+  chatBotIsTyping = new BehaviorSubject<boolean>(false);
+  chatHistory: ChatMessage[] = [];
 
-  async load(): Promise<void> {
-    if (this.history.value.length == 0) {
-      this.history.next([
-        {
-          user: "ChatGPT",
-          timestamp: new Date().toISOString(),
-          avatar: "https://i.pravatar.cc/300",
-          message: "Hi, I'm a movie expert. How can I help you?",
-        },
-      ]);
-    }
-    // for (let i = 0; i < 5; i++) {
-    //   this.movies.next(movies);
-    //   await new Promise<void>((resolve) => setTimeout(resolve, 1000));
-    // }
+  private addMessage(message: ChatMessage) {
+    this.chatHistory.push(message);
+    this.historySubject.next([message]);
   }
 
-  pushMessage(message: string): void {
-    this.history.next([
-      {
-        user: "You",
-        timestamp: new Date().toISOString(),
+  async load(): Promise<void> {
+    if (this.historySubject.value.length == 0) {
+      this.addMessage({
+        user: "ChatGPT",
+        timestamp: Date.now(),
         avatar: "https://i.pravatar.cc/300",
-        message,
-      },
-    ]);
+        message: "Hi, I'm a movie expert. How can I help you?",
+      });
+    }
+  }
+
+  async pushMessage(message: string): Promise<void> {
+    this.addMessage({
+      user: "You",
+      timestamp: Date.now(),
+      avatar: "https://i.pravatar.cc/300",
+      message,
+    });
+
+    const body = this.prepareRequestBody();
+
+    for (let tries = 0; tries < 3; tries++) {
+      try {
+        this.chatBotIsTyping.next(true);
+        const response = await fetch(chatServerUrl, {
+          method: "POST",
+          body: JSON.stringify(body),
+        });
+        this.chatBotIsTyping.next(false);
+        const responseBody: ChatServerResponseBody = await response.json();
+        this.addMessage({
+          user: { user: "You", system: "System", assistant: "ChatGPT" }[
+            responseBody.message.role
+          ] as ChatMessage["user"],
+          timestamp: Date.now(),
+          message: responseBody.message.content,
+        });
+        let movies = await this.askForJsonResponse();
+        if (movies.length > 0) {
+          await this.movieCarouselService.load(movies);
+        }
+        break;
+      } catch (e) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        continue;
+      }
+    }
   }
 
   getHistory(): BehaviorSubject<ChatMessage[]> {
-    return this.history;
+    return this.historySubject;
   }
 
-  constructor() {}
+  getChatbotTyping(): BehaviorSubject<boolean> {
+    return this.chatBotIsTyping;
+  }
+
+  private prepareRequestBody(): ChatServerRequestBody {
+    const body: ChatServerRequestBody = {
+      messages: [],
+    };
+    for (const message of this.chatHistory) {
+      body.messages.push({
+        role: { You: "user", ChatGPT: "assistant", System: "system" }[
+          message.user
+        ] as ChatServerMessage["role"],
+        content: message.message,
+      });
+    }
+    return body;
+  }
+
+  async askForJsonResponse(): Promise<string[]> {
+    const body = this.prepareRequestBody();
+    body.messages.push({
+      role: "user",
+      content:
+        'Give a json array containing the movie names. Wrap the array between $$$, like this: $$$["Movie A", "Movie B"]$$$.',
+    });
+    for (let tries = 0; tries < 3; tries++) {
+      try {
+        const response = await fetch(chatServerUrl, {
+          method: "POST",
+          body: JSON.stringify(body),
+        });
+        const responseBody: ChatServerResponseBody = await response.json();
+        let match = responseBody.message.content.match(/\$\$\$([\s\S]+)\$\$\$/);
+        if (match) {
+          match = match[1].match(/\[([\s\S]+)\]/);
+        }
+        if (match) {
+          let json = `[${match[1]}]`;
+          let movies = JSON.parse(json);
+          console.log(movies);
+          return movies;
+        }
+        break;
+      } catch (e) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        continue;
+      }
+    }
+    return [];
+  }
 }

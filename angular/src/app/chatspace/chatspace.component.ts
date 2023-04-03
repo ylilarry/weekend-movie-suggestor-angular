@@ -30,6 +30,8 @@ export class ChatspaceComponent {
   @ViewChild("chatHistoryEl")
   chatHistoryEl?: ElementRef<HTMLElement>;
 
+  chatbotIsTyping = false;
+
   ngOnInit() {
     this.chatHistoryService.getHistory().subscribe((messages) => {
       this.chatMessages.push(...messages);
@@ -55,6 +57,10 @@ export class ChatspaceComponent {
       this.chatSuggestions = suggestions;
     });
 
+    this.chatHistoryService.getChatbotTyping().subscribe((typing) => {
+      this.chatbotIsTyping = typing;
+    });
+
     this.chatSuggestionService.load();
     this.chatHistoryService.load();
   }
@@ -62,6 +68,12 @@ export class ChatspaceComponent {
   onChatMessageSubmit(message: string) {
     this.chatHistoryService.pushMessage(message);
   }
+
+  chatbotIsTypingMessage: ChatMessage = {
+    user: "ChatGPT",
+    message: "",
+    timestamp: Date.now(),
+  };
 
   onTextareaKeyDown(event: KeyboardEvent) {
     const textarea = event.target as HTMLTextAreaElement;

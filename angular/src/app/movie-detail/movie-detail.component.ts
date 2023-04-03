@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { CarouselMovie } from "src/app/carousel/carousel.component";
+import { CarouselMovie } from "src/app/movie-carousel.service";
 
 @Component({
   selector: "app-movie-detail",
