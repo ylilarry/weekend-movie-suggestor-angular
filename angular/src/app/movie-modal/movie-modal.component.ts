@@ -38,7 +38,6 @@ export const triggerAnimation = trigger("openClose", [
   selector: "app-movie-modal",
   templateUrl: "./movie-modal.component.html",
   styleUrls: ["./movie-modal.component.scss"],
-  providers: [BreakpointObserver],
 })
 export class MovieModalComponent {
   constructor(
@@ -99,18 +98,17 @@ export class MovieModalComponent {
     };
   }
 
-  playOpenAnimation(
-    animationBuilder: AnimationBuilder,
-    anchorEl: HTMLElement,
-    contentEl: HTMLElement,
-    backdropEl: HTMLElement
-  ) {
+  useSingleColumnLayout() {
+    return this.breakpointObserver.isMatched(`(max-width: 600px)`);
+  }
+
+  openContentStyleSingleColumn(contentEl: HTMLElement) {
     const em = parseFloat(getComputedStyle(contentEl).fontSize);
-    let modalWidth = 80 * em;
-    let modalHeight = 60 * em;
+    let modalWidth = Math.min(80 * em, window.innerWidth);
+    let modalHeight = Math.min(60 * em, window.innerHeight);
     if (this.breakpointObserver.isMatched(`(max-width: ${modalWidth}px)`)) {
       modalWidth = window.innerWidth;
-      modalHeight = (modalWidth / 2 / 2) * 3;
+      modalHeight = window.innerHeight;
     }
     const openContentStyle = {
       left: `${
@@ -123,6 +121,44 @@ export class MovieModalComponent {
       height: `${modalHeight}px`,
       opacity: 1,
     };
+    return openContentStyle;
+  }
+
+  openContentStyle(contentEl: HTMLElement) {
+    const em = parseFloat(getComputedStyle(contentEl).fontSize);
+    let modalWidth = Math.min(80 * em, window.innerWidth);
+    let modalHeight = Math.min(60 * em, window.innerHeight);
+    if (this.breakpointObserver.isMatched(`(max-width: ${modalWidth}px)`)) {
+      modalWidth = window.innerWidth;
+      modalHeight = (modalWidth / 2 / 2) * 3;
+    }
+    if (this.breakpointObserver.isMatched(`(max-height: ${modalHeight}px)`)) {
+      modalHeight = Math.min(window.innerHeight, modalHeight);
+      modalWidth = window.innerWidth;
+    }
+    const openContentStyle = {
+      left: `${
+        ((window.innerWidth - modalWidth) / 2 / window.innerWidth) * 100
+      }%`,
+      top: `${
+        ((window.innerHeight - modalHeight) / 2 / window.innerHeight) * 100
+      }%`,
+      width: `${modalWidth}px`,
+      height: `${modalHeight}px`,
+      opacity: 1,
+    };
+    return openContentStyle;
+  }
+
+  playOpenAnimation(
+    animationBuilder: AnimationBuilder,
+    anchorEl: HTMLElement,
+    contentEl: HTMLElement,
+    backdropEl: HTMLElement
+  ) {
+    const openContentStyle = this.useSingleColumnLayout()
+      ? this.openContentStyleSingleColumn(contentEl)
+      : this.openContentStyle(contentEl);
     const contentAnimation = animationBuilder.build([
       style({
         top: anchorEl?.getBoundingClientRect().top + "px",

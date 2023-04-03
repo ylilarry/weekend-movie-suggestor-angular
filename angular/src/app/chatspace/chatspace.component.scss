@@ -18,7 +18,10 @@
       }
       overflow-y: scroll;
       max-height: calc(
-        100vh - var(--carousel-height) - var(--chat-input-height) - 18em
+        max(
+          100vh - var(--carousel-height) - var(--chat-input-height) - 18em,
+          10em
+        )
       );
     }
     .chat-suggestions {

@@ -13,12 +13,19 @@
     .detail-tile {
       box-sizing: border-box;
       align-self: flex-start;
+      background-size: contain;
+      overflow-y: auto;
       height: 100%;
       width: 100%;
-      padding: 5em;
+      display: grid;
+      .dropback-filter {
+        padding: 5em;
+        @media (max-width: 768px) {
+          padding: 2em;
+        }
+      }
       background-color: styles.$backgroundColor;
       color: white;
-      display: block;
       .subtitle-line {
         display: flex;
         gap: 0.75em;
