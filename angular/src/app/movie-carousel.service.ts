@@ -2,6 +2,19 @@ import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import { movieSearchUrl } from "src/app/config";
 
+const defaultLoadedMovies = [
+  "The Godfather",
+  "Casablanca",
+  "Gone with the Wind",
+  "Citizen Kane",
+  "Psycho",
+  "Vertigo",
+  "Singin' in the Rain",
+  "The Wizard of Oz",
+  "Lawrence of Arabia",
+  "Schindler's List",
+];
+
 export type CarouselMovie = {
   title: string;
   year: string;
@@ -23,11 +36,7 @@ export class MovieCarouselService {
 
   async load(query?: string[]): Promise<void> {
     if (!query) {
-      query = [
-        "That Time I Got Reincarnated as a Slime the Movie: Scarlet Bond",
-        "adventure",
-        "animation",
-      ];
+      query = defaultLoadedMovies;
     }
     let movies: CarouselMovie[] = [];
     movies = await this.searchMovies(query);

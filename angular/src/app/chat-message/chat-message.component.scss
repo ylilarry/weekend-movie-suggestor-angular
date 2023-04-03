@@ -27,7 +27,8 @@
     }
   }
   .message {
-    white-space: pre;
+    white-space: pre-wrap;
+    margin-right: 0.5em;
     &.is-typing {
       opacity: 0.5;
       font-size: 0.9em;

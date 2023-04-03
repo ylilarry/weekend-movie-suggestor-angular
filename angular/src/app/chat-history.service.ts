@@ -132,6 +132,9 @@ export class ChatHistoryService {
         if (match) {
           let json = `[${match[1]}]`;
           let movies = JSON.parse(json);
+          for (let i = 0; i < movies.length; i++) {
+            movies[i] = movies[i].replace(/\(\d+-?\d*\)/g, "");
+          }
           console.log(movies);
           return movies;
         }
