@@ -44,6 +44,8 @@ Resources:
         AllowMethods: ["*"]
         AllowHeaders: ["*"]
         AllowOrigins:
+          - "http://yumbp16.local:4200"
+          - "https://yumbp16.local:4200"
           - "http://localhost:4200"
           - "https://weekend-movie-angular.yuli.se"
       DisableExecuteApiEndpoint: True
