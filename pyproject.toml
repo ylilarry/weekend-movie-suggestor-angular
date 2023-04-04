@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "my-app"
+name = "weekend-movie-suggestor"
 version = "0.1.0"
 description = ""
 authors = ["Yu Li <ylilarry@gmail.com>"]
