@@ -1,6 +1,7 @@
 # Live
 
 https://weekend-movie-angular.yuli.se
+https://findmovie.chat
 
 # Start development
 
