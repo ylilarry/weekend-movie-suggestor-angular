@@ -14,7 +14,7 @@ Globals:
 Parameters:
   GatewayHostNameV2:
     Type: String
-    Default: "api.weekend-movie.yuli.se"
+    Default: "api.findmovie.chat"
 
 Resources:
   GenerateCertificateV2: # Creates a valid certificate for the HTTP API endpoint under the custom domain
@@ -47,6 +47,7 @@ Resources:
           - "http://yumbp16.local:4200"
           - "https://yumbp16.local:4200"
           - "http://localhost:4200"
+          - "https://findmovie.chat"
           - "https://weekend-movie-angular.yuli.se"
       DisableExecuteApiEndpoint: True
 
