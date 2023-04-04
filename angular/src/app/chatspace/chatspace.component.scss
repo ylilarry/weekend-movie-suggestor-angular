@@ -16,13 +16,18 @@
         display: block;
         margin: 1em 0;
       }
-      overflow-y: scroll;
+      overflow-y: auto;
       max-height: calc(
         max(
           100vh - var(--carousel-height) - var(--chat-input-height) - 18em,
           15em
         )
       );
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
     .chat-suggestions {
       display: flex;
