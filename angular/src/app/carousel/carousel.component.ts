@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { CarouselMovie } from "src/app/movie-carousel.service";
 
 export type CarouselConfig = {
@@ -17,4 +17,15 @@ export class CarouselComponent {
 
   @Input()
   config!: CarouselConfig;
+
+  @ViewChild("scrollEl")
+  scrollEl?: ElementRef<HTMLElement>;
+
+  handleScroll(event: Event) {
+    if (this.scrollEl && event instanceof WheelEvent && event.deltaY != 0) {
+      this.scrollEl.nativeElement.scrollBy({
+        left: event.deltaY / 2,
+      });
+    }
+  }
 }

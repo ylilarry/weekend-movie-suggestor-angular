@@ -1,4 +1,4 @@
-<div class="carousel">
+<div class="carousel" #scrollEl (wheel)="handleScroll($event)">
     <div class="item" *ngFor="let item of movies" (click)="config.onClick($event, item)">
         <div class="img" matRipple [style.background-image]="'url('+ item.poster +')'"></div>
         <caption>{{item.title}}</caption>
