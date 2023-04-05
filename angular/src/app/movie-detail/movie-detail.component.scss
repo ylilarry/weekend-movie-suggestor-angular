@@ -65,6 +65,16 @@
           }
         }
       }
+
+      .sources-line {
+        display: inline-flex;
+        gap: 1em;
+        .mat-icon {
+          font-size: 0.9em;
+          height: 1em;
+          width: 1em;
+        }
+      }
     }
   }
 }

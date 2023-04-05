@@ -14,11 +14,11 @@
                         [style.color]="'gold'">star_half</mat-icon>
                     <mat-icon *ngIf="movie?.score && movie!.score > 7" class="material-icons-round"
                         [style.color]="'gold'">star</mat-icon>
-                    {{movie?.score}}/10
+                    {{movie?.score | number : '1.1-1'}}/10
                 </h3>
                 <div class="subtitle-line">
                     <span class="year">{{movie?.year}}</span>
-                    <span class="year">{{movie?.score}}</span>
+                    <span class="year" *ngIf="movie?.rating">{{movie?.rating}}</span>
                     <span class="year">{{movie?.lengthMinutes}}m</span>
                     <mat-chip-set class="genres">
                         <mat-chip *ngFor="let g of movie?.genres?.slice(0,3)">{{g}}</mat-chip>
@@ -39,6 +39,18 @@
                     <span *ngFor="let s of movie?.actors?.slice(0,3); index as i" class="stars-list">
                         <span class="dot" *ngIf="i > 0">&#x2022;</span>
                         <a target="_blank" [href]="'https://google.com/search?q=' + s">{{s}}</a>
+                    </span>
+                </p>
+                <mat-divider />
+                <p class="imdb">
+                    <b class="label">Source</b>
+                    <span class="sources-line">
+                        <a target="_blank" [href]="'https://www.imdb.com/title/' + movie?.imdbId">IMDb
+                            <mat-icon class="material-icons-round">open_in_new</mat-icon>
+                        </a>
+                        <a target="_blank" [href]="'https://www.themoviedb.org/movie/' + movie?.tmdbId">TMDB
+                            <mat-icon class="material-icons-round">open_in_new</mat-icon>
+                        </a>
                     </span>
                 </p>
             </div>

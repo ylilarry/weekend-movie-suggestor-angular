@@ -12,12 +12,15 @@ type MovieData struct {
 	Title         string   `json:"title"`
 	Year          string   `json:"year"`
 	Poster        string   `json:"poster"`
-	Score         int      `json:"score"`
+	Score         float32  `json:"score"`
 	LengthMinutes int      `json:"lengthMinutes"`
 	Description   string   `json:"description"`
 	Directors     []string `json:"directors"`
 	Actors        []string `json:"actors"`
 	Genres        []string `json:"genres"`
+	Rating        string   `json:"rating"`
+	ImdbId        string   `json:"imdbId"`
+	TmdbId        int64    `json:"tmdbId"`
 }
 
 func TmdbClient() (*tmdb.Client, error) {
@@ -75,16 +78,24 @@ func SearchMovie(client *tmdb.Client, query string) (*MovieData, error) {
 		return nil, nil
 	}
 
+	rating := ""
+	if detail.Adult {
+		rating = "Adult"
+	}
+
 	movieData := &MovieData{
 		Title:         movie.Title,
 		Year:          strings.Split(movie.ReleaseDate, "-")[0],
-		Score:         int(movie.VoteAverage),
+		Score:         movie.VoteAverage,
 		LengthMinutes: 0,
 		Description:   movie.Overview,
 		Directors:     []string{},
 		Actors:        []string{},
 		Poster:        "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
 		Genres:        []string{},
+		Rating:        rating,
+		TmdbId:        movie.ID,
+		ImdbId:        detail.IMDbID,
 	}
 
 	movieData.LengthMinutes = detail.Runtime

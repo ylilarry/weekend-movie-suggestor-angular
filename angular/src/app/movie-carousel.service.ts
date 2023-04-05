@@ -20,11 +20,14 @@ export type CarouselMovie = {
   year: string;
   poster: string;
   score: number;
+  rating: string;
   lengthMinutes: number;
   description: string;
   directors: string[];
   actors: string[];
   genres: string[];
+  imdbId: string;
+  tmdbId: number;
 };
 
 @Injectable({
