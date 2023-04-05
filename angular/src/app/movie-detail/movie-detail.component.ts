@@ -14,7 +14,7 @@ export class MovieDetailComponent {
   movie: CarouselMovie | null = null;
 
   useSingleColumnLayout() {
-    return this.breakpointObserver.isMatched(`(max-width: 600px)`);
+    return this.breakpointObserver.isMatched(`(max-width: 768px)`);
   }
 
   detailTileStyle() {

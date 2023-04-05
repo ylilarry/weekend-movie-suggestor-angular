@@ -103,7 +103,7 @@ export class MovieModalComponent {
   }
 
   useSingleColumnLayout() {
-    return this.breakpointObserver.isMatched(`(max-width: 600px)`);
+    return this.breakpointObserver.isMatched(`(max-width: 768px)`);
   }
 
   openContentStyleSingleColumn(contentEl: HTMLElement) {
